@@ -7,8 +7,6 @@ edition = "2018"
 [lib]
 crate-type = ["cdylib"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-j4rs = { path = "../../j4rs/rust" }
-j4rs_derive = { path = "../../j4rs/rust/j4rs_derive" }
+j4rs = { git = "https://github.com/astonbitecode/j4rs.git" }
+j4rs_derive = { git = "https://github.com/astonbitecode/j4rs.git" }
