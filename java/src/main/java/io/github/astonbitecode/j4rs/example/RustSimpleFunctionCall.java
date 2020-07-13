@@ -14,13 +14,15 @@
  */
 package io.github.astonbitecode.j4rs.example;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Welcome. This is a simple example that demonstrates calls to rust functions using j4rs.\n");
+public class RustSimpleFunctionCall {
+    private static native void fnnoargs();
 
-        var rustFnCalls = new RustSimpleFunctionCall();
-        rustFnCalls.doCallNoArgs();
-
-        System.out.println("\nBye!");
+    public RustSimpleFunctionCall() throws UnsatisfiedLinkError {
+        System.loadLibrary("rustlib");
     }
+
+    public void doCallNoArgs() {
+        fnnoargs();
+    }
+
 }

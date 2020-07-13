@@ -21,7 +21,7 @@ use j4rs::InvocationArg;
 use j4rs::prelude::*;
 use j4rs_derive::*;
 
-#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnnoargs")]
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustSimpleFunctionCall.fnnoargs")]
 fn my_function_with_no_args() {
     println!("Hello from the Rust world!");
 }
@@ -34,11 +34,20 @@ fn my_function_with_1_string_arg(i1: Instance) {
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fntwoargs")]
-fn my_function_with_2_args(string_instance: Instance, integer_instance: Instance) {
+fn my_function_with_2_args(integer_instance1: Instance, integer_instance2: Instance) {
     let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
-    let s: String = jvm.to_rust(string_instance).unwrap();
-    let i: i32 = jvm.to_rust(integer_instance).unwrap();
-    println!("String Instance was '{}' and Integer Instance was: '{}'", s, i);
+    let _i1: i32 = jvm.to_rust(integer_instance1).unwrap();
+    let _i2: i32 = jvm.to_rust(integer_instance2).unwrap();
+    println!("Instance 1 was '{}' and Instance 2 was: '{}'", _i1, _i2);
+}
+
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnthreeargs")]
+fn my_function_with_3_args(integer_instance1: Instance, integer_instance2: Instance, integer_instance3: Instance) {
+    let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
+    let _i1: i32 = jvm.to_rust(integer_instance1).unwrap();
+    let _i2: i32 = jvm.to_rust(integer_instance2).unwrap();
+    let _i3: i32 = jvm.to_rust(integer_instance3).unwrap();
+    println!("{}, {}, {}", _i1, _i2, _i3);
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.addintegers")]

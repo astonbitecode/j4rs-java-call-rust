@@ -23,7 +23,9 @@ public class RustFunctionCalls {
 
     private static native void fnstringarg(NativeInvocation<String> s);
 
-    private static native void fntwoargs(NativeInvocation<String> s, NativeInvocation<Integer> i);
+    private static native void fntwoargs(NativeInvocation<Integer> i1, NativeInvocation<Integer> i2);
+
+    private static native void fnthreeargs(NativeInvocation<Integer> i1, NativeInvocation<Integer> i2, NativeInvocation<Integer> i3);
 
     private static native ObjectValue addintegers(NativeInvocation<Integer> i1, NativeInvocation<Integer> i2);
 
@@ -41,8 +43,12 @@ public class RustFunctionCalls {
         fnstringarg(Java2RustUtils.createNativeInvocation(s));
     }
 
-    public void doCallWithTwoArgs(String s, Integer i) {
-        fntwoargs(Java2RustUtils.createNativeInvocation(s), Java2RustUtils.createNativeInvocation(i));
+    public void doCallWithTwoArgs(Integer i1, Integer i2) {
+        fntwoargs(Java2RustUtils.createNativeInvocation(i1), Java2RustUtils.createNativeInvocation(i2));
+    }
+
+    public void doCallWithThreeArgs(Integer i1, Integer i2, Integer i3) {
+        fnthreeargs(Java2RustUtils.createNativeInvocation(i1), Java2RustUtils.createNativeInvocation(i2), Java2RustUtils.createNativeInvocation(i3));
     }
 
     public Integer addInRust(Integer i1, Integer i2) {
