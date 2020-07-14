@@ -14,11 +14,7 @@
  */
 package io.github.astonbitecode.j4rs.example;
 
-import org.astonbitecode.j4rs.errors.InvocationException;
-
 public class Stress {
-    private static long time = 0;
-
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome. This is a test that tries to stress native calls.\n");
         var rustFnCalls = new RustFunctionCalls();
@@ -27,11 +23,11 @@ public class Stress {
     }
 
     private static void stress(RustFunctionCalls rustFnCalls) {
-        time = System.currentTimeMillis();
+        long time = System.currentTimeMillis();
         for (int i = 0; i < 100000000; i++) {
             Integer sum = rustFnCalls.addInRust(1, 1);
             if (i % 1000000 == 0) {
-                long diff  = System.currentTimeMillis() - time;
+                long diff = System.currentTimeMillis() - time;
                 System.out.println(i + "---" + diff);
                 time = System.currentTimeMillis();
             }

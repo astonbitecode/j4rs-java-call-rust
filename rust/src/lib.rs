@@ -25,14 +25,14 @@ fn my_function_with_no_args() {
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnstringarg")]
 fn my_function_with_1_string_arg(i1: Instance) {
-    let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
     let s: String = jvm.to_rust(i1).unwrap();
     println!("A String Instance was passed to Rust: {}", s);
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fntwoargs")]
 fn my_function_with_2_args(integer_instance1: Instance, integer_instance2: Instance) {
-    let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
     let _i1: i32 = jvm.to_rust(integer_instance1).unwrap();
     let _i2: i32 = jvm.to_rust(integer_instance2).unwrap();
     println!("Instance 1 was '{}' and Instance 2 was: '{}'", _i1, _i2);
@@ -40,7 +40,7 @@ fn my_function_with_2_args(integer_instance1: Instance, integer_instance2: Insta
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnthreeargs")]
 fn my_function_with_3_args(integer_instance1: Instance, integer_instance2: Instance, integer_instance3: Instance) {
-    let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
     let _i1: i32 = jvm.to_rust(integer_instance1).unwrap();
     let _i2: i32 = jvm.to_rust(integer_instance2).unwrap();
     let _i3: i32 = jvm.to_rust(integer_instance3).unwrap();
@@ -48,15 +48,16 @@ fn my_function_with_3_args(integer_instance1: Instance, integer_instance2: Insta
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.addintegers")]
-fn add_integers(integer_instance1: Instance, integer_instance2: Instance) -> Result<InvocationArg, String> {
-    let jvm: Jvm = Jvm::attach_thread_with_no_detach_on_drop().unwrap();
+fn add_integers(integer_instance1: Instance, integer_instance2: Instance) -> Result<Instance, String> {
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
     let i1: i32 = jvm.to_rust(integer_instance1).unwrap();
     let i2: i32 = jvm.to_rust(integer_instance2).unwrap();
     let sum = i1 + i2;
-    InvocationArg::try_from(sum).map_err(|error| format!("{}", error))
+    let ia = InvocationArg::try_from(sum).map_err(|error| format!("{}", error)).unwrap();
+    Instance::try_from(ia).map_err(|error| format!("{}", error))
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.throwexception")]
-fn returns_error() -> Result<InvocationArg, &'static str> {
+fn returns_error() -> Result<Instance, &'static str> {
     Err("Oops! An error occurred in Rust")
 }
