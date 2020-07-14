@@ -17,7 +17,7 @@ package io.github.astonbitecode.j4rs.example;
 public class RustSimpleFunctionCall {
     private static native void fnnoargs();
 
-    public RustSimpleFunctionCall() throws UnsatisfiedLinkError {
+    static {
         System.loadLibrary("rustlib");
     }
 
