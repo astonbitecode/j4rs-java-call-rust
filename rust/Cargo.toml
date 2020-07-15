@@ -8,5 +8,5 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-j4rs = { git = "https://github.com/astonbitecode/j4rs.git" }
-j4rs_derive = { git = "https://github.com/astonbitecode/j4rs.git" }
+j4rs = "0.12"
+j4rs_derive = "0.1"
