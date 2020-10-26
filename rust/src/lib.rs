@@ -17,6 +17,7 @@ use std::result::Result;
 use j4rs::InvocationArg;
 use j4rs::prelude::*;
 use j4rs_derive::*;
+use serde::Deserialize;
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustSimpleFunctionCall.fnnoargs")]
 fn my_function_with_no_args() {
@@ -55,6 +56,18 @@ fn add_integers(integer_instance1: Instance, integer_instance2: Instance) -> Res
     let sum = i1 + i2;
     let ia = InvocationArg::try_from(sum).map_err(|error| format!("{}", error)).unwrap();
     Instance::try_from(ia).map_err(|error| format!("{}", error))
+}
+
+#[derive(Deserialize, Debug)]
+struct MyClass {
+    number: i32
+}
+
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fncustomobject")]
+fn use_custom_object(i: Instance) {
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
+    let my_class: MyClass = jvm.to_rust(i).unwrap();
+    println!("{:?}", my_class);
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.throwexception")]

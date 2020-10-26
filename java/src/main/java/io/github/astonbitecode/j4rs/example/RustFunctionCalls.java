@@ -28,6 +28,8 @@ public class RustFunctionCalls {
 
     private static native Instance addintegers(Instance<Integer> i1, Instance<Integer> i2);
 
+    private static native void fncustomobject(Instance<MyClass> i);
+
     private static native Instance throwexception();
 
     static {
@@ -55,6 +57,10 @@ public class RustFunctionCalls {
                 Java2RustUtils.createInstance(i1),
                 Java2RustUtils.createInstance(i2));
         return Java2RustUtils.getObjectCasted(instance);
+    }
+
+    public void doCallWithCustomClass(MyClass myClass) {
+        fncustomobject(Java2RustUtils.createInstance(myClass));
     }
 
     public void throwExceptionFromRust() {
