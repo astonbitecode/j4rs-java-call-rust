@@ -58,6 +58,17 @@ fn add_integers(integer_instance1: Instance, integer_instance2: Instance) -> Res
     Instance::try_from(ia).map_err(|error| format!("{}", error))
 }
 
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnlist")]
+fn my_function_with_list_arg(list_instance1: Instance) {
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
+    let v: Vec<i32> = jvm.to_rust(list_instance1).unwrap();
+
+    println!("Got a list with elements:");
+    for i in v {
+        println!("{}", i);
+    }
+}
+
 #[derive(Deserialize, Debug)]
 struct MyClass {
     number: i32

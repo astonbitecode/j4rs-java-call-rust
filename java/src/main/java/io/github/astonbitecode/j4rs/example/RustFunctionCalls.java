@@ -17,6 +17,8 @@ package io.github.astonbitecode.j4rs.example;
 import org.astonbitecode.j4rs.api.Instance;
 import org.astonbitecode.j4rs.api.java2rust.Java2RustUtils;
 
+import java.util.List;
+
 public class RustFunctionCalls {
     private static native void fnnoargs();
 
@@ -31,6 +33,8 @@ public class RustFunctionCalls {
     private static native void fncustomobject(Instance<MyClass> i);
 
     private static native Instance throwexception();
+
+    private static native void fnlist(Instance<List<Integer>> i);
 
     static {
         System.loadLibrary("rustlib");
@@ -65,5 +69,9 @@ public class RustFunctionCalls {
 
     public void throwExceptionFromRust() {
         throwexception();
+    }
+
+    public void doCallWithList(List<Integer> list) {
+        fnlist(Java2RustUtils.createInstance(list));
     }
 }
