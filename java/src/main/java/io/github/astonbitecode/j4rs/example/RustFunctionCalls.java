@@ -32,6 +32,8 @@ public class RustFunctionCalls {
 
     private static native void fncustomobject(Instance<MyClass> i);
 
+    private static native Instance fncustomobjectret();
+
     private static native Instance throwexception();
 
     private static native void fnlist(Instance<List<Integer>> i);
@@ -65,6 +67,11 @@ public class RustFunctionCalls {
 
     public void doCallWithCustomClass(MyClass myClass) {
         fncustomobject(Java2RustUtils.createInstance(myClass));
+    }
+
+    public MyClass doCallWithCustomClassRet() {
+        Instance instance = fncustomobjectret();
+        return Java2RustUtils.getObjectCasted(instance);
     }
 
     public void throwExceptionFromRust() {

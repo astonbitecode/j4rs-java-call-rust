@@ -17,6 +17,9 @@ package io.github.astonbitecode.j4rs.example;
 public class MyClass {
     private int number;
 
+    public MyClass() {
+    }
+
     public MyClass(int number) {
         this.number = number;
     }

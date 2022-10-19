@@ -17,7 +17,7 @@ use std::result::Result;
 use j4rs::InvocationArg;
 use j4rs::prelude::*;
 use j4rs_derive::*;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustSimpleFunctionCall.fnnoargs")]
 fn my_function_with_no_args() {
@@ -69,7 +69,7 @@ fn my_function_with_list_arg(list_instance1: Instance) {
     }
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 struct MyClass {
     number: i32
 }
@@ -79,6 +79,15 @@ fn use_custom_object(i: Instance) {
     let jvm: Jvm = Jvm::attach_thread().unwrap();
     let my_class: MyClass = jvm.to_rust(i).unwrap();
     println!("{:?}", my_class);
+}
+
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fncustomobjectret")]
+fn ret_custom_object() -> Result<Instance, String> {
+    let test_object = MyClass {
+        number : 33
+    };
+    let ia = InvocationArg::new(&test_object, "io.github.astonbitecode.j4rs.example.MyClass");
+    return Instance::try_from(ia).map_err(|error| format!("{}", error));
 }
 
 #[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.throwexception")]
