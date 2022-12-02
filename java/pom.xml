@@ -19,7 +19,7 @@
         <dependency>
             <groupId>io.github.astonbitecode</groupId>
             <artifactId>j4rs</artifactId>
-            <version>0.14.0</version>
+            <version>0.14.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

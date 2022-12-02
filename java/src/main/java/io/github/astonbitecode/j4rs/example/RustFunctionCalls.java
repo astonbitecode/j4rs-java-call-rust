@@ -18,6 +18,7 @@ import org.astonbitecode.j4rs.api.Instance;
 import org.astonbitecode.j4rs.api.java2rust.Java2RustUtils;
 
 import java.util.List;
+import java.util.Map;
 
 public class RustFunctionCalls {
     private static native void fnnoargs();
@@ -37,6 +38,8 @@ public class RustFunctionCalls {
     private static native Instance throwexception();
 
     private static native void fnlist(Instance<List<Integer>> i);
+    
+    private static native Instance fnmap(Instance<Map<String, Integer>> i);
 
     static {
         System.loadLibrary("rustlib");
@@ -80,5 +83,10 @@ public class RustFunctionCalls {
 
     public void doCallWithList(List<Integer> list) {
         fnlist(Java2RustUtils.createInstance(list));
+    }
+
+    public Map<String, Integer> doCallWithMap(Map<String, Integer> map) {
+        Instance instance = fnmap(Java2RustUtils.createInstance(map));
+        return Java2RustUtils.getObjectCasted(instance);
     }
 }

@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 // Copyright 2020 astonbitecode
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +15,7 @@
 use std::convert::TryFrom;
 use std::result::Result;
 
-use j4rs::InvocationArg;
+use j4rs::{InvocationArg, JavaClass};
 use j4rs::prelude::*;
 use j4rs_derive::*;
 use serde::{Deserialize, Serialize};
@@ -67,6 +68,28 @@ fn my_function_with_list_arg(list_instance1: Instance) {
     for i in v {
         println!("{}", i);
     }
+}
+
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.fnmap")]
+fn my_function_with_map_arg(map_instance: Instance) -> Result<Instance, String> {
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
+    let m: HashMap<String, i32> = jvm.to_rust(map_instance).unwrap();
+
+    println!("Got a map with elements:");
+    for (k, v) in m {
+        println!("{}: {}", k, v);
+    }
+
+    let map = HashMap::from([
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+    ]);
+    let map_instance_to_return = jvm.java_map(
+        JavaClass::String,
+        JavaClass::Integer,
+        map);
+    map_instance_to_return.map_err(|error| format!("{}", error))
 }
 
 #[derive(Deserialize, Serialize, Debug)]
