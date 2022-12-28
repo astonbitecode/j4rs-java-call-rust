@@ -5,7 +5,7 @@
 [j4rs](https://github.com/astonbitecode/j4rs) focused solely in facilitating Rust applications in making calls to Java code 
 by [allowing](https://github.com/astonbitecode/j4rs#basics) 
 JVM creation and manipulation from the Rust code, 
-efortless Java method invocations,
+effortless Java method invocations,
 Java libraries [provisioning via Maven](https://github.com/astonbitecode/j4rs#Using-Maven-artifacts) 
 and [more](https://github.com/astonbitecode/j4rs#features).
 
