@@ -41,6 +41,8 @@ public class RustFunctionCalls {
     
     private static native Instance fnmap(Instance<Map<String, Integer>> i);
 
+    private static native Instance callback(Instance<RustFunctionCalls> rfc);
+
     static {
         System.loadLibrary("rustlib");
     }
@@ -88,5 +90,13 @@ public class RustFunctionCalls {
     public Map<String, Integer> doCallWithMap(Map<String, Integer> map) {
         Instance instance = fnmap(Java2RustUtils.createInstance(map));
         return Java2RustUtils.getObjectCasted(instance);
+    }
+
+    public void call(Integer i) {
+        System.out.println("Java was called by the Rust world! " + i);
+    }
+
+    public void testCallback() {
+        callback(Java2RustUtils.createInstance(this));
     }
 }

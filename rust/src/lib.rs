@@ -92,6 +92,13 @@ fn my_function_with_map_arg(map_instance: Instance) -> Result<Instance, String> 
     map_instance_to_return.map_err(|error| format!("{}", error))
 }
 
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.callback")]
+fn test_rust_to_java_callback(callback: Instance) {
+    let jvm = Jvm::attach_thread().unwrap();
+    let ia = InvocationArg::try_from(33).unwrap();
+    let _ = jvm.invoke(&callback, "call", &[ia]).unwrap();
+}
+
 #[derive(Deserialize, Serialize, Debug)]
 struct MyClass {
     number: i32
