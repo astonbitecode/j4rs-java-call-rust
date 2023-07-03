@@ -19,14 +19,24 @@
         <dependency>
             <groupId>io.github.astonbitecode</groupId>
             <artifactId>j4rs</artifactId>
-            <version>0.15.0</version>
+            <version>0.16.2-SNAPSHOT</version>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                    <artifactId>jackson-core</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                    <artifactId>jackson-databind</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
     </dependencies>
 
     <build>
         <resources>
             <resource>
-                <directory>src/resources</directory>
+                <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*</include>
                 </includes>
