@@ -43,6 +43,8 @@ public class RustFunctionCalls {
 
     private static native Instance callback(Instance<RustFunctionCalls> rfc);
 
+    private static native Instance callrustasync(Instance<Long> i);
+
     static {
         System.loadLibrary("rustlib");
     }
@@ -98,5 +100,10 @@ public class RustFunctionCalls {
 
     public void testCallback() {
         callback(Java2RustUtils.createInstance(this));
+    }
+
+    public Long callRustAsync(Long l) {
+        Instance instance = callrustasync(Java2RustUtils.createInstance(l));
+        return Java2RustUtils.getObjectCasted(instance);
     }
 }

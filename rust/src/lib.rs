@@ -124,3 +124,25 @@ fn ret_custom_object() -> Result<Instance, String> {
 fn returns_error() -> Result<Instance, &'static str> {
     Err("Oops! An error occurred in Rust")
 }
+
+#[call_from_java("io.github.astonbitecode.j4rs.example.RustFunctionCalls.callrustasync")]
+fn call_rust_async(i: Instance) -> Result<Instance, String> {
+    let jvm: Jvm = Jvm::attach_thread().unwrap();
+    let number: i64 = jvm.to_rust(i).unwrap();
+    // Create a runtime
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .unwrap();
+
+    // Call the asynchronous connect method using the runtime.
+    let square = rt.block_on(square(number));
+
+    InvocationArg::try_from(square)
+        .map_err(|error| format!("{}", error))
+        .and_then(|square| Instance::try_from(square).map_err(|error| format!("{}", error)))
+}
+
+async fn square(a: i64) -> i64 {
+    a * a
+}
