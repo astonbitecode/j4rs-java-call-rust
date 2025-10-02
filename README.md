@@ -54,7 +54,7 @@ We need the `j4rs` 0.15.0 dependency:
 <dependency>
     <groupId>io.github.astonbitecode</groupId>
     <artifactId>j4rs</artifactId>
-    <version>0.15.0</version>
+    <version>0.22.0</version>
 </dependency>
 ```
 
